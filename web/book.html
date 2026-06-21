@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hạt Giống Tâm Hồn - Sách nói Phygital</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- jQuery is required for Turn.js -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <!-- Global Page Loader -->
+    <div id="page-loader" class="page-loader">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- 65% Top: Flipbook Container -->
+        <div class="flipbook-wrapper" id="flipbook-wrapper">
+            <div id="flipbook">
+                <!-- Pages will be dynamically injected here by app.js -->
+                <div class="page hard cover-front">
+                    <h1>Hạt Giống Tâm Hồn</h1>
+                    <p>Tập 1</p>
+                </div>
+                <div class="page hard cover-back"></div>
+            </div>
+        </div>
+
+        <!-- 15% Bottom: Audio Player -->
+        <div class="audio-panel" id="audio-player-container">
+            
+            <!-- Left: Info -->
+            <div class="audio-info">
+                <h3 id="current-chapter-title">Đang tải...</h3>
+                <div class="select-group">
+                    <select id="volume-select" class="glass-select">
+                        <option value="1">Tập 1</option>
+                        <option value="2">Tập 2</option>
+                        <option value="3">Tập 3</option>
+                        <option value="4">Tập 4</option>
+                        <option value="5">Tập 5</option>
+                        <option value="6">Tập 6</option>
+                        <option value="7">Tập 7</option>
+                        <option value="8">Tập 8</option>
+                        <option value="9">Tập 9</option>
+                        <option value="10">Tập 10</option>
+                    </select>
+                    <select id="chapter-select" class="glass-select">
+                        <!-- Chapters will be populated here -->
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Center: Player Controls & Progress -->
+            <div class="audio-player-core">
+                <div class="controls-container">
+                    <button id="btn-rewind" class="control-btn secondary-btn" title="Lùi 15s"><i class="fa-solid fa-rotate-left"></i></button>
+                    <button id="btn-prev-chapter" class="control-btn secondary-btn" title="Chương trước"><i class="fa-solid fa-backward-step"></i></button>
+                    <button id="btn-play-pause" class="control-btn primary-btn" title="Phát/Tạm dừng"><i class="fa-solid fa-play"></i></button>
+                    <button id="btn-next-chapter" class="control-btn secondary-btn" title="Chương sau"><i class="fa-solid fa-forward-step"></i></button>
+                    <button id="btn-forward" class="control-btn secondary-btn" title="Tiến 15s"><i class="fa-solid fa-rotate-right"></i></button>
+                </div>
+                
+                <div class="progress-container">
+                    <span id="time-current" class="time-text">00:00</span>
+                    <input type="range" id="progress-bar" class="progress-bar" value="0" step="0.1" min="0" max="100">
+                    <span id="time-total" class="time-text">00:00</span>
+                </div>
+            </div>
+
+            <!-- Right: Spacer for centering -->
+            <div class="audio-right"></div>
+            
+            <audio id="audio-element" style="display: none;"></audio>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden"></div>
+
+    <!-- Turn.js -->
+    <script src="js/turn.js"></script>
+    <!-- App Logic -->
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+name: Deploy Phygital Book to GitHub Pages
+
+on:
+  # Chạy tự động khi có push mới lên nhánh main
+  push:
+    branches: ["main"]
+
+  # Cho phép chạy workflow thủ công từ tab Actions
+  workflow_dispatch:
+
+# Cấp quyền GITHUB_TOKEN cho việc deploy lên Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Chỉ cho phép 1 deploy chạy cùng lúc
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Chỉ upload thư mục 'web' chứa toàn bộ ứng dụng
+          path: 'web'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

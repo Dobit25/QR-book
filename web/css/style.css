@@ -1,0 +1,391 @@
+/* style.css - Premium Modern Design */
+
+:root {
+    --bg-color: #0f172a;
+    --panel-bg: rgba(30, 41, 59, 0.7);
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --accent-color: #3b82f6;
+    --accent-hover: #60a5fa;
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --page-bg: #fdfbf7;
+    --page-text: #333333;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0f172a; /* Slate 900 */
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow: hidden; /* Ngăn cuộn toàn trang */
+}
+
+/* === PAGE LOADER === */
+.page-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #0f172a;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.page-loader.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    border-top-color: #3b82f6; /* Xanh ngọc mượt mà */
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+/* --- Flipbook Section (Fluid) --- */
+.flipbook-wrapper {
+    flex: 1;
+    min-height: 0; /* Cho phép co lại an toàn trong flexbox */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 2000px;
+    padding: 2vh 2vw; /* Lề nhỏ an toàn */
+    position: relative;
+    z-index: 10;
+}
+
+#flipbook {
+    background: transparent;
+    transition: margin-left 0.5s ease-in-out; /* Bắt buộc cho tính năng autoCenter của TurnJS */
+}
+
+#flipbook .page {
+    background-color: #fdfbf7;
+    color: var(--page-text);
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Fix glitch lật trang của Chrome/Webkit đối với Turn.js */
+#flipbook .turn-page {
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+/* Đổ bóng gáy sách (spine shadow) để trông giống sách thật */
+#flipbook .page.even {
+    background-image: linear-gradient(to right, rgba(0,0,0,0.06) 0%, rgba(255,255,255,0) 8%);
+}
+#flipbook .page.odd {
+    background-image: linear-gradient(to left, rgba(0,0,0,0.06) 0%, rgba(255,255,255,0) 8%);
+}
+
+/* === IMAGE PAGE STYLE === */
+.page-image {
+    width: 100%;
+    height: 100%;
+    object-fit: fill; /* Khớp toàn bộ khung, bỏ qua viền trắng */
+    user-select: none;
+    -webkit-user-drag: none;
+    background-color: white;
+}
+
+#flipbook .page h2 {
+    font-family: 'Inter', sans-serif;
+    color: #1e293b;
+    margin-bottom: 1em;
+    font-weight: 700;
+    text-align: center;
+    font-size: 1.35em;
+    letter-spacing: -0.5px;
+}
+
+#flipbook .page p {
+    margin-bottom: 0.8em;
+    line-height: 1.65;
+}
+
+.hard {
+    background-image: linear-gradient(120deg, #1e3a8a 0%, #3b82f6 100%) !important;
+    color: white !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.3) !important;
+}
+
+/* --- Audio Panel Section (Fixed Height) --- */
+.audio-panel {
+    flex: 0 0 90px; /* Chiều cao cố định, không bao giờ bị bóp méo */
+    height: 90px;
+    background: var(--panel-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--glass-border);
+    padding: 0 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--glass-shadow);
+    z-index: 20;
+    border-radius: 20px 20px 0 0;
+}
+
+.audio-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow: hidden;
+}
+
+.audio-player-core {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.audio-right {
+    flex: 1;
+}
+
+#current-chapter-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.select-group {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.glass-select {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border: 1px solid var(--glass-border);
+    padding: 6px 12px;
+    border-radius: 20px;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    width: fit-content;
+    max-width: 100%;
+}
+
+.glass-select:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.glass-select option {
+    background: var(--bg-color);
+    color: var(--text-primary);
+}
+
+/* Progress Bar */
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.time-text {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+    width: 45px;
+    text-align: center;
+}
+
+.progress-bar {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    cursor: pointer;
+    box-shadow: -407px 0 0 400px var(--accent-color); /* Creates the filled track effect */
+}
+
+/* Controls */
+.controls-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.control-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.control-btn:active {
+    transform: scale(0.9);
+}
+
+.secondary-btn {
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.secondary-btn:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.primary-btn {
+    color: white;
+    font-size: 1.5rem;
+    background: var(--accent-color);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+
+.primary-btn:hover {
+    background: var(--accent-hover);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+}
+
+/* Toast */
+.toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ef4444;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4);
+    z-index: 1000;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.toast.hidden {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+    pointer-events: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .audio-panel {
+        height: auto;
+        min-height: 120px;
+        flex: 0 0 auto;
+        flex-direction: column;
+        justify-content: center;
+        gap: 12px;
+        padding: 15px;
+    }
+    
+    .audio-info {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        flex: none;
+    }
+    
+    #current-chapter-title {
+        max-width: 55%;
+        font-size: 0.95rem;
+    }
+    
+    .audio-player-core {
+        width: 100%;
+        flex: none;
+    }
+    
+    .audio-right {
+        display: none;
+    }
+    
+    .primary-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+    }
+    
+    .secondary-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 0.95rem;
+    }
+    
+    .controls-container {
+        gap: 15px;
+    }
+    
+    .progress-container {
+        gap: 10px;
+    }
+}
