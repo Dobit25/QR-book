@@ -1,0 +1,11 @@
+raw_pdfs/
+__pycache__/
+*.pyc
+.env
+.venv
+env/
+venv/
+*.log
+test.mp3
+test_*.py
+test_*.txt

@@ -118,45 +118,65 @@ def process_pdf(pdf_path, output_json_path, book_id, book_title):
         # Extract Text
         text = page.get_text("text")
         cleaned_lines = []
-        is_chapter = False
         
         if text:
-            lines = text.split("\n")
-            for line in lines:
-                line_stripped = line.strip()
-                if not line_stripped:
+            lines = [line.strip() for line in text.split("\n") if line.strip()]
+            
+            i = 0
+            while i < len(lines):
+                line = lines[i]
+                
+                # Skip headers/footers
+                lower_line = line.lower()
+                if "hạt giống tâm hồn" in lower_line and len(line) < 25:
+                    i += 1
+                    continue
+                if "sống cho điều ý nghĩa hơn" in lower_line and len(line) < 40:
+                    i += 1
+                    continue
+                if "first news" in lower_line and len(line) < 25:
+                    i += 1
                     continue
                 
-                line_stripped = vni_to_unicode(line_stripped)
+                # Detect Chapter using Drop Cap + Number + Title
+                if len(line) == 1 and line.isupper() and i + 2 < len(lines):
+                    if re.match(r'^\d+$', lines[i+1]) or "lời giới thiệu" in lines[i+1].lower():
+                        current_chapter_title = lines[i+2]
+                        if "lời giới thiệu" in lines[i+1].lower():
+                            current_chapter_title = "Lời Giới Thiệu"
+                            
+                        # Save new chapter
+                        if not chapters_data or chapters_data[-1]["title"] != current_chapter_title:
+                            current_chapter_id += 1
+                            chapters_data.append({
+                                "chapter_id": current_chapter_id,
+                                "title": current_chapter_title,
+                                "start_page": page_num + 1,
+                                "audio_url": ""
+                            })
+                        
+                        # Prepend drop cap to the first actual line of text
+                        next_text_idx = i + 3
+                        if "lời giới thiệu" in lines[i+1].lower():
+                            # Skip the quote and author name
+                            if "Nick Vujicic" in lines[i+3]:
+                                next_text_idx = i + 4
+                            elif i + 4 < len(lines) and "Nick Vujicic" in lines[i+4]:
+                                next_text_idx = i + 5
+                        
+                        if next_text_idx < len(lines):
+                            lines[next_text_idx] = line + lines[next_text_idx]
+                            
+                        i = next_text_idx
+                        continue
                 
-                lower_line = line_stripped.lower()
-                if "hạt giống tâm hồn" in lower_line and len(line_stripped) < 25:
+                # Skip standalone numbers
+                if re.match(r'^\d+$', line):
+                    i += 1
                     continue
-                if "first news" in lower_line and len(line_stripped) < 25:
-                    continue
-                if re.match(r'^\d+$', line_stripped):
-                    continue
-                    
-                # Detect Chapter
-                if re.match(r'^(Chương|Phần)\s+\d+', line_stripped, re.IGNORECASE):
-                    is_chapter = True
-                elif line_stripped.isupper() and len(line_stripped) > 5 and len(line_stripped) < 80:
-                    is_chapter = True
-                    
-                if is_chapter:
-                    current_chapter_title = line_stripped
-                    is_chapter = False
-                    
-                    if chapters_data[-1]["title"] != current_chapter_title:
-                        current_chapter_id += 1
-                        chapters_data.append({
-                            "chapter_id": current_chapter_id,
-                            "title": current_chapter_title,
-                            "start_page": page_num + 1,
-                            "audio_url": ""
-                        })
                 
-                cleaned_lines.append(line_stripped)
+                cleaned_lines.append(line)
+                i += 1
                 
         # Join lines into paragraphs for TTS
         joined_paragraphs = []
@@ -202,12 +222,12 @@ def process_pdf(pdf_path, output_json_path, book_id, book_title):
     print(f"Tổng số chương phát hiện: {len(chapters_data)}")
 
 if __name__ == "__main__":
-    for vol in range(1, 11):
-        pdf_file = rf"c:\Users\HOANG TUNG\QR-book\raw_pdfs\Hat giong tam hồn {vol}.pdf"
+    for vol in range(1, 2):
+        pdf_file = rf"c:\Users\HOANG TUNG\QR-book\raw_pdfs\1. FILE_20230425_210449_Sống Cho Điều Ý Nghĩa Hơn.pdf"
         out_json = rf"c:\Users\HOANG TUNG\QR-book\web\data\volume_{vol}\book_config.json"
         
         if os.path.exists(pdf_file):
             print(f"\n=== BẮT ĐẦU XỬ LÝ TẬP {vol} ===")
-            process_pdf(pdf_file, out_json, vol, f"Hạt Giống Tâm Hồn - Tập {vol}")
+            process_pdf(pdf_file, out_json, vol, f"Sống Cho Điều Ý Nghĩa Hơn")
         else:
             print(f"Không tìm thấy file: {pdf_file}")

@@ -69,11 +69,6 @@ $(document).ready(function() {
         // Clear existing dynamic pages (keep covers)
         flipbook.find('.page:not(.hard)').remove();
         
-        // Update front cover
-        const urlParams = new URLSearchParams(window.location.search);
-        const volume = urlParams.get('volume') || 1;
-        flipbook.find('.cover-front p').text(`Tập ${volume}`);
-        
         let pagesHtml = '';
         bookData.pages.forEach(page => {
             const contentHtml = `
@@ -96,9 +91,9 @@ $(document).ready(function() {
         
         function calculateSize() {
             const isMobile = $(window).width() < 768;
-            // Dành 95% không gian của wrapper cho sách để chừa 1 chút lề
-            const w = wrapper.width() * 0.95;
-            const h = wrapper.height() * 0.95;
+            // Tối đa hóa diện tích sách (99% width/height của wrapper)
+            const w = wrapper.width() * 0.99;
+            const h = wrapper.height() * 0.99;
             
             let bw, bh;
             
@@ -183,8 +178,17 @@ $(document).ready(function() {
     // 4. Build Audio Player UI
     function buildAudioPlayer() {
         chapterSelect.empty();
+        let chapterNum = 1;
         bookData.chapters.forEach((ch, idx) => {
-            chapterSelect.append(`<option value="${idx}">Chương ${ch.chapter_id}: ${ch.title}</option>`);
+            let prefix = "";
+            const lowerTitle = ch.title.toLowerCase();
+            if (lowerTitle.includes("lời giới thiệu") || lowerTitle.includes("mục lục")) {
+                prefix = "";
+            } else {
+                prefix = `Chương ${chapterNum}: `;
+                chapterNum++;
+            }
+            chapterSelect.append(`<option value="${idx}">${prefix}${ch.title}</option>`);
         });
         
         loadChapterAudio(0, false);

@@ -23,7 +23,7 @@ def clean_html(raw_html):
 async def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     
-    for vol in range(1, 11):
+    for vol in range(1, 2):
         print(f"\n=== XỬ LÝ AUDIO TẬP {vol} ===")
         json_path = os.path.join(script_dir, "..", "web", "data", f"volume_{vol}", "book_config.json")
         audio_dir = os.path.join(script_dir, "..", "web", "audio", f"volume_{vol}")
