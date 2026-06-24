@@ -2,10 +2,10 @@
 
 $(document).ready(function() {
     let bookData = null;
-    let currentChapterIndex = 0;
-    let audioElements = {};
     const flipbook = $('#flipbook');
+    const wrapper = $('#flipbook-wrapper');
     const audioPlayer = $('#audio-element')[0];
+    const sfxPlayer = $('#sfx-player')[0];
     
     // UI Elements
     const playBtn = $('#btn-play-pause');
@@ -13,8 +13,10 @@ $(document).ready(function() {
     const progressBar = $('#progress-bar');
     const timeCurrent = $('#time-current');
     const timeTotal = $('#time-total');
-    const chapterSelect = $('#chapter-select');
-    const currentChapterTitle = $('#current-chapter-title');
+    const pageIndicator = $('#page-indicator');
+    
+    // Zoom state
+    let currentZoom = 1;
 
     // 1. Fetch JSON Configuration
     async function init() {
@@ -23,35 +25,17 @@ $(document).ready(function() {
             const urlParams = new URLSearchParams(window.location.search);
             const volume = urlParams.get('volume') || 1;
             
-            // Set volume dropdown value
-            $('#volume-select').val(volume);
-            
-            // Listen for volume change
-            $('#volume-select').on('change', function() {
-                const selectedVol = $(this).val();
-                
-                // Hiển thị Loader làm mờ cảnh
-                $('#page-loader').removeClass('hidden');
-                
-                // Đợi Loader hiện rõ rồi mới Reload trang
-                setTimeout(() => {
-                    window.location.href = `?volume=${selectedVol}`;
-                }, 300);
-            });
-            
             const response = await fetch(`data/volume_${volume}/book_config.json?v=${new Date().getTime()}`);
             if (!response.ok) throw new Error("Tập sách này chưa sẵn sàng dữ liệu.");
             
             bookData = await response.json();
             
             buildFlipbook();
-            buildAudioPlayer();
+            setupAudioPlayer();
             setupEventListeners();
-            
-            // Initialize Flipbook
             initTurnJs();
             
-            // Chờ Turn.js render xong khung bìa rồi từ từ tắt Loader mượt mà
+            // Hide global loader
             setTimeout(() => {
                 $('#page-loader').addClass('hidden');
             }, 500);
@@ -59,14 +43,12 @@ $(document).ready(function() {
         } catch (error) {
             console.error("Initialization error:", error);
             showToast("Lỗi tải cấu hình sách: " + error.message);
-            // Hide loader even on error so user can see toast
             $('#page-loader').addClass('hidden');
         }
     }
 
     // 2. Build the Flipbook DOM
     function buildFlipbook() {
-        // Clear existing dynamic pages (keep covers)
         flipbook.find('.page:not(.hard)').remove();
         
         let pagesHtml = '';
@@ -79,57 +61,33 @@ $(document).ready(function() {
             </div>`;
         });
         
-        // Insert before the back cover
         const backCover = flipbook.find('.cover-back');
         $(pagesHtml).insertBefore(backCover);
     }
 
     // 3. Initialize Turn.js
+    const ratio = 1.414; 
+    
+    function calculateSize() {
+        const isMobile = $(window).width() < 768;
+        const w = wrapper.width() * 0.99;
+        const h = wrapper.height() * 0.99;
+        
+        let bw, bh;
+        if (isMobile) {
+            let bwByHeight = h / ratio;
+            bw = Math.min(w, bwByHeight);
+            bh = bw * ratio;
+        } else {
+            let bwByHeight = (h / ratio) * 2;
+            bw = Math.min(w, bwByHeight);
+            bh = (bw / 2) * ratio;
+        }
+        return { width: bw, height: bh, isMobile: isMobile };
+    }
+
     function initTurnJs() {
-        const wrapper = $('#flipbook-wrapper');
-        const ratio = 1.414; // A4 ratio approx (height / single_width)
-        
-        function calculateSize() {
-            const isMobile = $(window).width() < 768;
-            // Tối đa hóa diện tích sách (99% width/height của wrapper)
-            const w = wrapper.width() * 0.99;
-            const h = wrapper.height() * 0.99;
-            
-            let bw, bh;
-            
-            if (isMobile) {
-                // Single page display
-                let bwByHeight = h / ratio;
-                bw = Math.min(w, bwByHeight);
-                bh = bw * ratio;
-            } else {
-                // Double page display
-                let bwByHeight = (h / ratio) * 2;
-                bw = Math.min(w, bwByHeight);
-                bh = (bw / 2) * ratio;
-            }
-            
-            return { width: bw, height: bh, isMobile: isMobile };
-        }
-        
         const initialSize = calculateSize();
-        
-        // Cập nhật kích thước Font chữ linh hoạt theo chiều cao sách để hiển thị được nhiều chữ hơn trên màn hình nhỏ
-        function updateFontSize(height) {
-            // 0.026 là hệ số tối ưu để chứa được khoang 650-700 chữ / 1 trang mà không bị tràn
-            const baseFontSize = Math.max(12, height * 0.026);
-            
-            let styleEl = $('#dynamic-font-style');
-            if (styleEl.length === 0) {
-                styleEl = $('<style id="dynamic-font-style">').prop('type', 'text/css').appendTo('head');
-            }
-            styleEl.html(`
-                #flipbook .page { font-size: ${baseFontSize}px; }
-                #flipbook .page h2 { font-size: ${baseFontSize * 1.5}px; }
-            `);
-        }
-        
-        updateFontSize(initialSize.height);
         
         flipbook.turn({
             width: initialSize.width,
@@ -140,90 +98,70 @@ $(document).ready(function() {
             display: initialSize.isMobile ? 'single' : 'double'
         });
 
+        // Navigation Overlays Logic
+        $('#nav-prev').click(function(e) {
+            e.preventDefault();
+            flipbook.turn('previous');
+        });
+        
+        $('#nav-next').click(function(e) {
+            e.preventDefault();
+            flipbook.turn('next');
+        });
+
         // Responsive handling
         $(window).resize(function() {
             const newSize = calculateSize();
-            
             if (newSize.isMobile && flipbook.turn('display') === 'double') {
                 flipbook.turn('display', 'single');
             } else if (!newSize.isMobile && flipbook.turn('display') === 'single') {
                 flipbook.turn('display', 'double');
             }
-            
-            flipbook.turn('size', newSize.width, newSize.height);
-            updateFontSize(newSize.height);
+            flipbook.turn('size', newSize.width * currentZoom, newSize.height * currentZoom);
         });
         
-        // Sync Event 2: Flipbook to Audio
+        // Page Flip SFX and Page Indicator
+        flipbook.bind('turning', function(event, page, view) {
+            // Play SFX
+            sfxPlayer.currentTime = 0;
+            sfxPlayer.play().catch(e => console.log('SFX block', e));
+        });
+
         flipbook.bind('turned', function(event, page, view) {
-            // Find which chapter this page belongs to
-            let newChapterIdx = 0;
-            for (let i = bookData.chapters.length - 1; i >= 0; i--) {
-                if (page >= bookData.chapters[i].start_page) {
-                    newChapterIdx = i;
-                    break;
-                }
-            }
-            
-            // If page flipped into a new chapter, update UI but don't auto-play yet
-            if (newChapterIdx !== currentChapterIndex) {
-                currentChapterIndex = newChapterIdx;
-                updateAudioUI(currentChapterIndex);
-                // Note: We don't change audio Player `src` here to avoid interrupting playback
-                // Only change if user clicks play on the new chapter.
-            }
+            // Update Page Indicator
+            const totalPages = flipbook.turn('pages');
+            pageIndicator.text(`Page: ${page} / ${totalPages}`);
         });
     }
 
-    // 4. Build Audio Player UI
-    function buildAudioPlayer() {
-        chapterSelect.empty();
-        let chapterNum = 1;
-        bookData.chapters.forEach((ch, idx) => {
-            let prefix = "";
-            const lowerTitle = ch.title.toLowerCase();
-            if (lowerTitle.includes("lời giới thiệu") || lowerTitle.includes("mục lục")) {
-                prefix = "";
-            } else {
-                prefix = `Chương ${chapterNum}: `;
-                chapterNum++;
-            }
-            chapterSelect.append(`<option value="${idx}">${prefix}${ch.title}</option>`);
+    // 4. Setup Audio Player
+    function setupAudioPlayer() {
+        audioPlayer.src = 'audio/intro_audio.mp3';
+        audioPlayer.load();
+        
+        // Extract timeTotal immediately if possible
+        $(audioPlayer).on('loadedmetadata', function() {
+            timeTotal.text(formatTime(audioPlayer.duration));
         });
-        
-        loadChapterAudio(0, false);
     }
-    
-    function loadChapterAudio(index, autoplay = false) {
-        currentChapterIndex = index;
-        const chapter = bookData.chapters[index];
-        
-        updateAudioUI(index);
-        
-        // Load audio source
-        // Here we use local files generated by edge-tts instead of Google Drive for now
-        // audio_url might be empty, so fallback to local path
-        const urlParams = new URLSearchParams(window.location.search);
-        const volume = urlParams.get('volume') || 1;
-        const audioSrc = chapter.audio_url || `audio/volume_${volume}/ch_${chapter.chapter_id}.mp3`;
-        audioPlayer.src = audioSrc;
-        
-        if (autoplay) {
+
+    // 5. Setup Event Listeners
+    function setupEventListeners() {
+        // Intro Poster Start Button
+        $('#btn-start-experience').click(function() {
+            $('#intro-poster').addClass('hidden');
+            
+            // Start audio
             audioPlayer.play().catch(e => {
                 console.error("Audio play error:", e);
-                handleAudioError();
+                showToast("Lỗi phát âm thanh. Vui lòng thử lại.");
             });
-        }
-    }
-    
-    function updateAudioUI(index) {
-        const chapter = bookData.chapters[index];
-        currentChapterTitle.text(chapter.title);
-        chapterSelect.val(index);
-    }
+            playIcon.removeClass('fa-play').addClass('fa-pause');
+            
+            // Turn to cover
+            flipbook.turn('page', 1);
+        });
 
-    // 5. Setup Audio Event Listeners
-    function setupEventListeners() {
         // Audio Player Events
         $(audioPlayer).on('timeupdate', function() {
             const current = audioPlayer.currentTime;
@@ -237,42 +175,18 @@ $(document).ready(function() {
         
         $(audioPlayer).on('ended', function() {
             playIcon.removeClass('fa-pause').addClass('fa-play');
-            // Auto next chapter
-            if (currentChapterIndex < bookData.chapters.length - 1) {
-                $('#btn-next-chapter').click();
-            }
         });
         
         $(audioPlayer).on('error', handleAudioError);
         
-        // Controls
+        // Audio Controls
         playBtn.click(function() {
             if (audioPlayer.paused) {
                 audioPlayer.play();
                 playIcon.removeClass('fa-play').addClass('fa-pause');
-                
-                // Sync Event 1: Audio Play -> Turn Page
-                const chapter = bookData.chapters[currentChapterIndex];
-                flipbook.turn('page', chapter.start_page);
             } else {
                 audioPlayer.pause();
                 playIcon.removeClass('fa-pause').addClass('fa-play');
-            }
-        });
-        
-        $('#btn-prev-chapter').click(function() {
-            if (currentChapterIndex > 0) {
-                loadChapterAudio(currentChapterIndex - 1, true);
-                playIcon.removeClass('fa-play').addClass('fa-pause');
-                flipbook.turn('page', bookData.chapters[currentChapterIndex - 1].start_page);
-            }
-        });
-        
-        $('#btn-next-chapter').click(function() {
-            if (currentChapterIndex < bookData.chapters.length - 1) {
-                loadChapterAudio(currentChapterIndex + 1, true);
-                playIcon.removeClass('fa-play').addClass('fa-pause');
-                flipbook.turn('page', bookData.chapters[currentChapterIndex + 1].start_page);
             }
         });
         
@@ -290,11 +204,103 @@ $(document).ready(function() {
                 audioPlayer.currentTime = time;
             }
         });
+
+        // Extra Controls
+        // Zoom and Pan state
+        let currentTranslateX = 0;
+        let currentTranslateY = 0;
+        let isDragging = false;
+        let startX, startY;
+
+        function applyZoom() {
+            if (currentZoom === 1) {
+                currentTranslateX = 0;
+                currentTranslateY = 0;
+                flipbook.css({
+                    'transform': 'none',
+                    'transition': 'transform 0.3s ease'
+                });
+            } else {
+                flipbook.css({
+                    'transform': `scale(${currentZoom}) translate(${currentTranslateX}px, ${currentTranslateY}px)`,
+                    'transform-origin': 'center center',
+                    'transition': 'transform 0.3s ease'
+                });
+            }
+        }
         
-        chapterSelect.change(function() {
-            const idx = parseInt($(this).val());
-            loadChapterAudio(idx, !audioPlayer.paused);
-            flipbook.turn('page', bookData.chapters[idx].start_page);
+        $('#btn-zoom-in').click(function() {
+            currentZoom = Math.min(currentZoom + 0.3, 3);
+            applyZoom();
+        });
+
+        $('#btn-zoom-out').click(function() {
+            currentZoom = Math.max(currentZoom - 0.3, 1);
+            applyZoom();
+        });
+
+        // Drag to Pan
+        wrapper.on('mousedown touchstart', function(e) {
+            if (currentZoom <= 1) return;
+            // Prevent default to avoid selection issues
+            if (e.type === 'mousedown') e.preventDefault();
+            
+            isDragging = true;
+            flipbook.css('transition', 'none');
+            const pageX = e.pageX || (e.originalEvent.touches && e.originalEvent.touches[0].pageX);
+            const pageY = e.pageY || (e.originalEvent.touches && e.originalEvent.touches[0].pageY);
+            
+            startX = pageX - (currentTranslateX * currentZoom);
+            startY = pageY - (currentTranslateY * currentZoom);
+        });
+
+        $(window).on('mousemove touchmove', function(e) {
+            if (!isDragging || currentZoom <= 1) return;
+            const pageX = e.pageX || (e.originalEvent.touches && e.originalEvent.touches[0].pageX);
+            const pageY = e.pageY || (e.originalEvent.touches && e.originalEvent.touches[0].pageY);
+            
+            currentTranslateX = (pageX - startX) / currentZoom;
+            currentTranslateY = (pageY - startY) / currentZoom;
+            
+            flipbook.css('transform', `scale(${currentZoom}) translate(${currentTranslateX}px, ${currentTranslateY}px)`);
+        });
+
+        $(window).on('mouseup touchend', function() {
+            if (isDragging) {
+                isDragging = false;
+                flipbook.css('transition', 'transform 0.3s ease');
+            }
+        });
+        
+        // Page Navigation Buttons
+        $('#btn-page-prev').click(function() {
+            flipbook.turn('previous');
+        });
+        
+        $('#btn-page-next').click(function() {
+            flipbook.turn('next');
+        });
+
+        // Fullscreen
+        $('#btn-fullscreen').click(function() {
+            const elem = document.documentElement;
+            if (!document.fullscreenElement) {
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } else if (elem.webkitRequestFullscreen) { /* Safari */
+                    elem.webkitRequestFullscreen();
+                } else if (elem.msRequestFullscreen) { /* IE11 */
+                    elem.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) { /* Safari */
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) { /* IE11 */
+                    document.msExitFullscreen();
+                }
+            }
         });
     }
     
@@ -306,11 +312,8 @@ $(document).ready(function() {
     }
     
     function handleAudioError() {
-        showToast("⚠️ Lỗi tải Audio (Network / CORS). Đang thử chuyển sang file dự phòng...");
+        showToast("⚠️ Lỗi tải Audio.");
         playIcon.removeClass('fa-pause').addClass('fa-play');
-        
-        // Backup logic could be implemented here
-        // e.g. audioPlayer.src = '/web/audio_backup/ch_' + bookData.chapters[currentChapterIndex].chapter_id + '.mp3';
     }
     
     function showToast(msg) {

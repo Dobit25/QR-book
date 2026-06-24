@@ -21,9 +21,21 @@
         <div class="spinner"></div>
     </div>
 
+    <div id="intro-poster" class="intro-poster">
+        <div class="intro-content">
+            <button id="btn-start-experience" class="start-btn">
+                <i class="fa-solid fa-book-open"></i> Bắt đầu trải nghiệm
+            </button>
+        </div>
+    </div>
+
     <div class="app-container">
         <!-- 65% Top: Flipbook Container -->
         <div class="flipbook-wrapper" id="flipbook-wrapper">
+            <!-- Navigation overlays for easy tap-to-turn -->
+            <div class="flip-nav left" id="nav-prev"><i class="fa-solid fa-chevron-left"></i></div>
+            <div class="flip-nav right" id="nav-next"><i class="fa-solid fa-chevron-right"></i></div>
+            
             <div id="flipbook">
                 <!-- Pages will be dynamically injected here by app.js -->
                 <div class="page hard cover-front">
@@ -33,27 +45,25 @@
             </div>
         </div>
 
-        <!-- 15% Bottom: Audio Player -->
+        <!-- Floating Audio Player -->
         <div class="audio-panel" id="audio-player-container">
             
             <!-- Left: Info -->
             <div class="audio-info">
-                <h3 id="current-chapter-title">Đang tải...</h3>
-                <div class="select-group">
-                    <select id="chapter-select" class="glass-select">
-                        <!-- Chapters will be populated here -->
-                    </select>
+                <h3 id="current-chapter-title">Giới thiệu sách</h3>
+                <div class="page-indicator-container">
+                    <button id="btn-page-prev" class="control-btn tiny-btn" title="Trang trước"><i class="fa-solid fa-chevron-left"></i></button>
+                    <div class="page-indicator" id="page-indicator">Page: 1 / 1</div>
+                    <button id="btn-page-next" class="control-btn tiny-btn" title="Trang sau"><i class="fa-solid fa-chevron-right"></i></button>
                 </div>
             </div>
             
             <!-- Center: Player Controls & Progress -->
             <div class="audio-player-core">
                 <div class="controls-container">
-                    <button id="btn-rewind" class="control-btn secondary-btn" title="Lùi 15s"><i class="fa-solid fa-rotate-left"></i></button>
-                    <button id="btn-prev-chapter" class="control-btn secondary-btn" title="Chương trước"><i class="fa-solid fa-backward-step"></i></button>
-                    <button id="btn-play-pause" class="control-btn primary-btn" title="Phát/Tạm dừng"><i class="fa-solid fa-play"></i></button>
-                    <button id="btn-next-chapter" class="control-btn secondary-btn" title="Chương sau"><i class="fa-solid fa-forward-step"></i></button>
-                    <button id="btn-forward" class="control-btn secondary-btn" title="Tiến 15s"><i class="fa-solid fa-rotate-right"></i></button>
+                    <button id="btn-rewind" class="control-btn small-btn" title="Lùi 15s"><i class="fa-solid fa-rotate-left"></i></button>
+                    <button id="btn-play-pause" class="control-btn main-play-btn" title="Phát/Tạm dừng"><i class="fa-solid fa-play"></i></button>
+                    <button id="btn-forward" class="control-btn small-btn" title="Tiến 15s"><i class="fa-solid fa-rotate-right"></i></button>
                 </div>
                 
                 <div class="progress-container">
@@ -63,10 +73,15 @@
                 </div>
             </div>
 
-            <!-- Right: Spacer for centering -->
-            <div class="audio-right"></div>
+            <!-- Right: Extra Controls -->
+            <div class="audio-right extra-controls">
+                <button id="btn-zoom-out" class="control-btn small-btn" title="Thu nhỏ"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+                <button id="btn-zoom-in" class="control-btn small-btn" title="Phóng to"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+                <button id="btn-fullscreen" class="control-btn small-btn" title="Toàn màn hình"><i class="fa-solid fa-expand"></i></button>
+            </div>
             
             <audio id="audio-element" style="display: none;"></audio>
+            <audio id="sfx-player" src="audio/page-flip.m4a" style="display: none;"></audio>
         </div>
     </div>
 
