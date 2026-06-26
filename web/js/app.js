@@ -136,7 +136,7 @@ $(document).ready(function() {
 
     // 4. Setup Audio Player
     function setupAudioPlayer() {
-        audioPlayer.src = 'audio/intro_audio.mp3';
+        audioPlayer.src = 'audio/intro_audio.m4a';
         audioPlayer.load();
         
         // Extract timeTotal immediately if possible

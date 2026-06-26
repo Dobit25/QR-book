@@ -21,10 +21,26 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #0f172a; /* Slate 900 */
     color: var(--text-primary);
     line-height: 1.6;
     overflow: hidden; /* Ngăn cuộn toàn trang */
+    background-color: #0f172a;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../img/poster_1.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: blur(15px);
+    transform: scale(1.1); /* Prevent blurred edges from leaking */
+    z-index: -1;
+    opacity: 0.6;
 }
 
 /* === PAGE LOADER === */
@@ -460,10 +476,11 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-image: url('../img/poster.jpg');
-    background-size: cover;
+    background-image: url('../img/poster_1.jpg');
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+    background-color: transparent; /* Allows blurred body background to show through letterboxes */
     z-index: 1000;
     display: flex;
     align-items: center;
