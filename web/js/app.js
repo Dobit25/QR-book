@@ -1,7 +1,8 @@
-// app.js
+// app.js - Multi-book QR Reader with URL Parameter Routing
 
 $(document).ready(function() {
     let bookData = null;
+    let bookId = 'book1'; // Default
     const flipbook = $('#flipbook');
     const wrapper = $('#flipbook-wrapper');
     const audioPlayer = $('#audio-element')[0];
@@ -18,17 +19,25 @@ $(document).ready(function() {
     // Zoom state
     let currentZoom = 1;
 
-    // 1. Fetch JSON Configuration
+    // 1. Initialize - Read URL parameter and fetch book config
     async function init() {
         try {
-            // Get volume from URL
+            // Read ?id=book1 from URL
             const urlParams = new URLSearchParams(window.location.search);
-            const volume = urlParams.get('volume') || 1;
+            bookId = urlParams.get('id') || 'book1';
             
-            const response = await fetch(`data/volume_${volume}/book_config.json?v=${new Date().getTime()}`);
-            if (!response.ok) throw new Error("Tập sách này chưa sẵn sàng dữ liệu.");
+            // Validate bookId format (only allow book1 to book99)
+            if (!/^book\d{1,2}$/.test(bookId)) {
+                bookId = 'book1';
+            }
+            
+            const response = await fetch(`data/${bookId}/book_config.json?v=${new Date().getTime()}`);
+            if (!response.ok) throw new Error("Quyển sách này chưa sẵn sàng.");
             
             bookData = await response.json();
+            
+            // Apply dynamic theme based on book config
+            applyBookTheme(bookData);
             
             buildFlipbook();
             setupAudioPlayer();
@@ -42,9 +51,44 @@ $(document).ready(function() {
             
         } catch (error) {
             console.error("Initialization error:", error);
-            showToast("Lỗi tải cấu hình sách: " + error.message);
+            showToast("Lỗi tải sách: " + error.message);
             $('#page-loader').addClass('hidden');
         }
+    }
+
+    // 1b. Apply book-specific theme (poster, cover, title, position)
+    function applyBookTheme(config) {
+        const basePath = `data/${bookId}`;
+        
+        // Set page title
+        const pageTitle = (config.ui && config.ui.page_title) || config.book_title || 'Sách nói QR';
+        document.title = pageTitle;
+        
+        // Set poster background on intro-poster overlay
+        const posterUrl = `${basePath}/poster.jpg`;
+        const posterPosition = (config.ui && config.ui.poster_position) || '85% center';
+        
+        $('#intro-poster').css({
+            'background-image': `url('${posterUrl}')`,
+            'background-position': posterPosition
+        });
+        
+        // Set blurred background on body::before via a dynamic style rule
+        const styleId = 'dynamic-book-style';
+        $(`#${styleId}`).remove();
+        $('head').append(`<style id="${styleId}">
+            body::before {
+                background-image: url('${posterUrl}') !important;
+                background-position: ${posterPosition} !important;
+            }
+        </style>`);
+        
+        // Set cover image
+        const coverUrl = `${basePath}/cover.jpg`;
+        $('#cover-front').html(`<img src="${coverUrl}" style="width: 100%; height: 100%; object-fit: fill;" alt="Bìa sách" draggable="false">`);
+        
+        // Set audio label
+        $('#current-chapter-title').text('Giới thiệu sách');
     }
 
     // 2. Build the Flipbook DOM
@@ -134,15 +178,38 @@ $(document).ready(function() {
         });
     }
 
-    // 4. Setup Audio Player
+    // 4. Setup Audio Player - Dynamic path based on bookId
     function setupAudioPlayer() {
-        audioPlayer.src = 'audio/intro_audio.m4a';
-        audioPlayer.load();
+        const basePath = `data/${bookId}`;
         
-        // Extract timeTotal immediately if possible
-        $(audioPlayer).on('loadedmetadata', function() {
-            timeTotal.text(formatTime(audioPlayer.duration));
-        });
+        // Detect audio format: try m4a first, fallback to mp3
+        const audioFormats = ['intro_audio.m4a', 'intro_audio.mp3'];
+        let audioLoaded = false;
+        
+        function tryLoadAudio(index) {
+            if (index >= audioFormats.length) {
+                console.warn('No audio file found for this book');
+                return;
+            }
+            const src = `${basePath}/${audioFormats[index]}`;
+            audioPlayer.src = src;
+            audioPlayer.load();
+            
+            // Listen for successful load
+            $(audioPlayer).off('loadedmetadata.init').on('loadedmetadata.init', function() {
+                audioLoaded = true;
+                timeTotal.text(formatTime(audioPlayer.duration));
+            });
+            
+            // Listen for error and try next format
+            $(audioPlayer).off('error.init').on('error.init', function() {
+                if (!audioLoaded) {
+                    tryLoadAudio(index + 1);
+                }
+            });
+        }
+        
+        tryLoadAudio(0);
     }
 
     // 5. Setup Event Listeners

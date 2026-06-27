@@ -1,0 +1,293 @@
+{
+  "book_id": "book5",
+  "book_title": "Bubu Và Titi",
+  "ui": {
+    "poster_position": "center center",
+    "page_title": "Bubu và Titi - Sách nói QR"
+  },
+  "chapters": [
+    {
+      "chapter_id": 1,
+      "title": "Toàn bộ sách",
+      "start_page": 1,
+      "audio_url": ""
+    }
+  ],
+  "pages": [
+    {
+      "page_number": 1,
+      "image_url": "data/book5/pages/page_1.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 2,
+      "image_url": "data/book5/pages/page_2.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 3,
+      "image_url": "data/book5/pages/page_3.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 4,
+      "image_url": "data/book5/pages/page_4.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 5,
+      "image_url": "data/book5/pages/page_5.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 6,
+      "image_url": "data/book5/pages/page_6.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 7,
+      "image_url": "data/book5/pages/page_7.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 8,
+      "image_url": "data/book5/pages/page_8.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 9,
+      "image_url": "data/book5/pages/page_9.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 10,
+      "image_url": "data/book5/pages/page_10.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 11,
+      "image_url": "data/book5/pages/page_11.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 12,
+      "image_url": "data/book5/pages/page_12.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 13,
+      "image_url": "data/book5/pages/page_13.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 14,
+      "image_url": "data/book5/pages/page_14.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 15,
+      "image_url": "data/book5/pages/page_15.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 16,
+      "image_url": "data/book5/pages/page_16.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 17,
+      "image_url": "data/book5/pages/page_17.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 18,
+      "image_url": "data/book5/pages/page_18.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 19,
+      "image_url": "data/book5/pages/page_19.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 20,
+      "image_url": "data/book5/pages/page_20.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 21,
+      "image_url": "data/book5/pages/page_21.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 22,
+      "image_url": "data/book5/pages/page_22.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 23,
+      "image_url": "data/book5/pages/page_23.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 24,
+      "image_url": "data/book5/pages/page_24.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 25,
+      "image_url": "data/book5/pages/page_25.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 26,
+      "image_url": "data/book5/pages/page_26.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 27,
+      "image_url": "data/book5/pages/page_27.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 28,
+      "image_url": "data/book5/pages/page_28.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 29,
+      "image_url": "data/book5/pages/page_29.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 30,
+      "image_url": "data/book5/pages/page_30.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 31,
+      "image_url": "data/book5/pages/page_31.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 32,
+      "image_url": "data/book5/pages/page_32.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 33,
+      "image_url": "data/book5/pages/page_33.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 34,
+      "image_url": "data/book5/pages/page_34.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 35,
+      "image_url": "data/book5/pages/page_35.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 36,
+      "image_url": "data/book5/pages/page_36.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 37,
+      "image_url": "data/book5/pages/page_37.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 38,
+      "image_url": "data/book5/pages/page_38.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 39,
+      "image_url": "data/book5/pages/page_39.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 40,
+      "image_url": "data/book5/pages/page_40.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 41,
+      "image_url": "data/book5/pages/page_41.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 42,
+      "image_url": "data/book5/pages/page_42.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 43,
+      "image_url": "data/book5/pages/page_43.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 44,
+      "image_url": "data/book5/pages/page_44.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 45,
+      "image_url": "data/book5/pages/page_45.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 46,
+      "image_url": "data/book5/pages/page_46.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 47,
+      "image_url": "data/book5/pages/page_47.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 48,
+      "image_url": "data/book5/pages/page_48.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 49,
+      "image_url": "data/book5/pages/page_49.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 50,
+      "image_url": "data/book5/pages/page_50.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 51,
+      "image_url": "data/book5/pages/page_51.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 52,
+      "image_url": "data/book5/pages/page_52.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 53,
+      "image_url": "data/book5/pages/page_53.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 54,
+      "image_url": "data/book5/pages/page_54.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 55,
+      "image_url": "data/book5/pages/page_55.jpg",
+      "content": ""
+    }
+  ]
+}

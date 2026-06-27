@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sống cho điều ý nghĩa hơn - Sách nói Phygital</title>
+    <title>Sách nói QR - Phygital</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,16 +30,16 @@
     </div>
 
     <div class="app-container">
-        <!-- 65% Top: Flipbook Container -->
+        <!-- Top: Flipbook Container -->
         <div class="flipbook-wrapper" id="flipbook-wrapper">
             <!-- Navigation overlays for easy tap-to-turn -->
             <div class="flip-nav left" id="nav-prev"><i class="fa-solid fa-chevron-left"></i></div>
             <div class="flip-nav right" id="nav-next"><i class="fa-solid fa-chevron-right"></i></div>
             
             <div id="flipbook">
-                <!-- Pages will be dynamically injected here by app.js -->
-                <div class="page hard cover-front" style="padding: 0; background: none; box-shadow: none;">
-                    <img src="img/bia_1.jpg" style="width: 100%; height: 100%; object-fit: fill;" alt="Bìa sách" draggable="false">
+                <!-- Cover & pages will be dynamically injected by app.js -->
+                <div class="page hard cover-front" id="cover-front" style="padding: 0; background: none; box-shadow: none;">
+                    <!-- Cover image set dynamically by app.js -->
                 </div>
                 <div class="page hard cover-back"></div>
             </div>

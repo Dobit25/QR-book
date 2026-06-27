@@ -1,0 +1,483 @@
+{
+  "book_id": "book4",
+  "book_title": "Hạnh Phúc Ở Trong Ta",
+  "ui": {
+    "poster_position": "center center",
+    "page_title": "Hạnh phúc ở trong ta - Sách nói QR"
+  },
+  "chapters": [
+    {
+      "chapter_id": 1,
+      "title": "Toàn bộ sách",
+      "start_page": 1,
+      "audio_url": ""
+    }
+  ],
+  "pages": [
+    {
+      "page_number": 1,
+      "image_url": "data/book4/pages/page_1.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 2,
+      "image_url": "data/book4/pages/page_2.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 3,
+      "image_url": "data/book4/pages/page_3.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 4,
+      "image_url": "data/book4/pages/page_4.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 5,
+      "image_url": "data/book4/pages/page_5.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 6,
+      "image_url": "data/book4/pages/page_6.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 7,
+      "image_url": "data/book4/pages/page_7.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 8,
+      "image_url": "data/book4/pages/page_8.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 9,
+      "image_url": "data/book4/pages/page_9.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 10,
+      "image_url": "data/book4/pages/page_10.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 11,
+      "image_url": "data/book4/pages/page_11.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 12,
+      "image_url": "data/book4/pages/page_12.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 13,
+      "image_url": "data/book4/pages/page_13.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 14,
+      "image_url": "data/book4/pages/page_14.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 15,
+      "image_url": "data/book4/pages/page_15.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 16,
+      "image_url": "data/book4/pages/page_16.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 17,
+      "image_url": "data/book4/pages/page_17.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 18,
+      "image_url": "data/book4/pages/page_18.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 19,
+      "image_url": "data/book4/pages/page_19.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 20,
+      "image_url": "data/book4/pages/page_20.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 21,
+      "image_url": "data/book4/pages/page_21.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 22,
+      "image_url": "data/book4/pages/page_22.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 23,
+      "image_url": "data/book4/pages/page_23.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 24,
+      "image_url": "data/book4/pages/page_24.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 25,
+      "image_url": "data/book4/pages/page_25.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 26,
+      "image_url": "data/book4/pages/page_26.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 27,
+      "image_url": "data/book4/pages/page_27.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 28,
+      "image_url": "data/book4/pages/page_28.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 29,
+      "image_url": "data/book4/pages/page_29.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 30,
+      "image_url": "data/book4/pages/page_30.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 31,
+      "image_url": "data/book4/pages/page_31.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 32,
+      "image_url": "data/book4/pages/page_32.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 33,
+      "image_url": "data/book4/pages/page_33.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 34,
+      "image_url": "data/book4/pages/page_34.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 35,
+      "image_url": "data/book4/pages/page_35.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 36,
+      "image_url": "data/book4/pages/page_36.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 37,
+      "image_url": "data/book4/pages/page_37.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 38,
+      "image_url": "data/book4/pages/page_38.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 39,
+      "image_url": "data/book4/pages/page_39.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 40,
+      "image_url": "data/book4/pages/page_40.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 41,
+      "image_url": "data/book4/pages/page_41.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 42,
+      "image_url": "data/book4/pages/page_42.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 43,
+      "image_url": "data/book4/pages/page_43.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 44,
+      "image_url": "data/book4/pages/page_44.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 45,
+      "image_url": "data/book4/pages/page_45.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 46,
+      "image_url": "data/book4/pages/page_46.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 47,
+      "image_url": "data/book4/pages/page_47.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 48,
+      "image_url": "data/book4/pages/page_48.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 49,
+      "image_url": "data/book4/pages/page_49.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 50,
+      "image_url": "data/book4/pages/page_50.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 51,
+      "image_url": "data/book4/pages/page_51.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 52,
+      "image_url": "data/book4/pages/page_52.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 53,
+      "image_url": "data/book4/pages/page_53.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 54,
+      "image_url": "data/book4/pages/page_54.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 55,
+      "image_url": "data/book4/pages/page_55.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 56,
+      "image_url": "data/book4/pages/page_56.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 57,
+      "image_url": "data/book4/pages/page_57.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 58,
+      "image_url": "data/book4/pages/page_58.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 59,
+      "image_url": "data/book4/pages/page_59.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 60,
+      "image_url": "data/book4/pages/page_60.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 61,
+      "image_url": "data/book4/pages/page_61.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 62,
+      "image_url": "data/book4/pages/page_62.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 63,
+      "image_url": "data/book4/pages/page_63.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 64,
+      "image_url": "data/book4/pages/page_64.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 65,
+      "image_url": "data/book4/pages/page_65.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 66,
+      "image_url": "data/book4/pages/page_66.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 67,
+      "image_url": "data/book4/pages/page_67.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 68,
+      "image_url": "data/book4/pages/page_68.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 69,
+      "image_url": "data/book4/pages/page_69.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 70,
+      "image_url": "data/book4/pages/page_70.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 71,
+      "image_url": "data/book4/pages/page_71.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 72,
+      "image_url": "data/book4/pages/page_72.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 73,
+      "image_url": "data/book4/pages/page_73.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 74,
+      "image_url": "data/book4/pages/page_74.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 75,
+      "image_url": "data/book4/pages/page_75.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 76,
+      "image_url": "data/book4/pages/page_76.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 77,
+      "image_url": "data/book4/pages/page_77.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 78,
+      "image_url": "data/book4/pages/page_78.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 79,
+      "image_url": "data/book4/pages/page_79.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 80,
+      "image_url": "data/book4/pages/page_80.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 81,
+      "image_url": "data/book4/pages/page_81.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 82,
+      "image_url": "data/book4/pages/page_82.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 83,
+      "image_url": "data/book4/pages/page_83.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 84,
+      "image_url": "data/book4/pages/page_84.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 85,
+      "image_url": "data/book4/pages/page_85.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 86,
+      "image_url": "data/book4/pages/page_86.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 87,
+      "image_url": "data/book4/pages/page_87.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 88,
+      "image_url": "data/book4/pages/page_88.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 89,
+      "image_url": "data/book4/pages/page_89.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 90,
+      "image_url": "data/book4/pages/page_90.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 91,
+      "image_url": "data/book4/pages/page_91.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 92,
+      "image_url": "data/book4/pages/page_92.jpg",
+      "content": ""
+    },
+    {
+      "page_number": 93,
+      "image_url": "data/book4/pages/page_93.jpg",
+      "content": ""
+    }
+  ]
+}
