@@ -26,8 +26,8 @@ $(document).ready(function() {
             const urlParams = new URLSearchParams(window.location.search);
             bookId = urlParams.get('id') || 'book1';
             
-            // Validate bookId format (only allow book1 to book99)
-            if (!/^book\d{1,2}$/.test(bookId)) {
+            const allowedBooks = ['book1', 'book2', 'book3', 'book4', 'book5', 'book6'];
+            if (!allowedBooks.includes(bookId)) {
                 bookId = 'book1';
             }
             
