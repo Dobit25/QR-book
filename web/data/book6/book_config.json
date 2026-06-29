@@ -5,6 +5,9 @@
     "poster_position": "center center",
     "page_title": "Quà tặng cho con - Sách nói QR"
   },
+  "audio": {
+    "intro": "intro_audio.mp3"
+  },
   "chapters": [
     {
       "chapter_id": 1,

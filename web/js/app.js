@@ -178,38 +178,41 @@ $(document).ready(function() {
         });
     }
 
-    // 4. Setup Audio Player - Dynamic path based on bookId
+    // 4. Setup Audio Player - Dynamic path based on book config
     function setupAudioPlayer() {
         const basePath = `data/${bookId}`;
+        const configuredAudio = bookData && bookData.audio && bookData.audio.intro;
+        const audioFiles = configuredAudio ? [configuredAudio] : ['intro_audio.m4a', 'intro_audio.mp3'];
         
-        // Detect audio format: try m4a first, fallback to mp3
-        const audioFormats = ['intro_audio.m4a', 'intro_audio.mp3'];
-        let audioLoaded = false;
-        
-        function tryLoadAudio(index) {
-            if (index >= audioFormats.length) {
+        function loadAudio(index) {
+            if (index >= audioFiles.length) {
                 console.warn('No audio file found for this book');
+                handleAudioError();
                 return;
             }
-            const src = `${basePath}/${audioFormats[index]}`;
-            audioPlayer.src = src;
-            audioPlayer.load();
             
-            // Listen for successful load
-            $(audioPlayer).off('loadedmetadata.init').on('loadedmetadata.init', function() {
-                audioLoaded = true;
+            const src = `${basePath}/${audioFiles[index]}`;
+            $(audioPlayer).off('loadedmetadata.init error.init');
+            
+            $(audioPlayer).on('loadedmetadata.init', function() {
                 timeTotal.text(formatTime(audioPlayer.duration));
             });
             
-            // Listen for error and try next format
-            $(audioPlayer).off('error.init').on('error.init', function() {
-                if (!audioLoaded) {
-                    tryLoadAudio(index + 1);
+            $(audioPlayer).on('error.init', function() {
+                if (index < audioFiles.length - 1) {
+                    loadAudio(index + 1);
+                    return;
                 }
+                
+                console.warn('Audio file failed to load:', src);
+                handleAudioError();
             });
+            
+            audioPlayer.src = src;
+            audioPlayer.load();
         }
         
-        tryLoadAudio(0);
+        loadAudio(0);
     }
 
     // 5. Setup Event Listeners
@@ -243,8 +246,6 @@ $(document).ready(function() {
         $(audioPlayer).on('ended', function() {
             playIcon.removeClass('fa-pause').addClass('fa-play');
         });
-        
-        $(audioPlayer).on('error', handleAudioError);
         
         // Audio Controls
         playBtn.click(function() {

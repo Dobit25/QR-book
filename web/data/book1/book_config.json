@@ -1,6 +1,9 @@
 {
   "book_id": "book1",
   "book_title": "Sống Cho Điều Ý Nghĩa Hơn",
+  "audio": {
+    "intro": "intro_audio.m4a"
+  },
   "chapters": [
     {
       "chapter_id": 1,

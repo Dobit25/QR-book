@@ -5,6 +5,9 @@
     "poster_position": "center center",
     "page_title": "Hạnh phúc ở trong ta - Sách nói QR"
   },
+  "audio": {
+    "intro": "intro_audio.m4a"
+  },
   "chapters": [
     {
       "chapter_id": 1,
