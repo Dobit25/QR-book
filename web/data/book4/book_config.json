@@ -3,7 +3,7 @@
   "book_title": "Hạnh Phúc Ở Trong Ta",
   "ui": {
     "poster_position": "center center",
-    "mobile_poster_position": "45% center",
+    "mobile_poster_position": "calc(45% + 100px) center",
     "mobile_poster_size": "auto 88%",
     "page_title": "Hạnh phúc ở trong ta - Sách nói QR"
   },
