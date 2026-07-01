@@ -67,14 +67,18 @@ $(document).ready(function() {
         // Set poster background on intro-poster overlay
         const posterUrl = `${basePath}/poster.jpg`;
         const isMobile = window.matchMedia('(max-width: 768px)').matches;
+        const introPosterImage = (isMobile && config.ui && config.ui.mobile_poster_image) || 'poster.jpg';
+        const introPosterUrl = `${basePath}/${introPosterImage}`;
         const defaultPosterPosition = (config.ui && config.ui.poster_position) || '85% center';
         const introPosterPosition = (isMobile && config.ui && config.ui.mobile_poster_position) || defaultPosterPosition;
         const introPosterSize = (isMobile && config.ui && config.ui.mobile_poster_size) || (config.ui && config.ui.poster_size) || 'cover';
+        const introPosterBackgroundColor = (isMobile && config.ui && config.ui.mobile_poster_background_color) || '';
         
         $('#intro-poster').css({
-            'background-image': `url('${posterUrl}')`,
+            'background-image': `url('${introPosterUrl}')`,
             'background-position': introPosterPosition,
-            'background-size': introPosterSize
+            'background-size': introPosterSize,
+            'background-color': introPosterBackgroundColor
         });
         
         // Set blurred background on body::before via a dynamic style rule
