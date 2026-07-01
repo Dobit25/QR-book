@@ -3,6 +3,10 @@
   "book_title": "Gia Đình Là Điều Tuyệt Vời Nhất",
   "ui": {
     "poster_position": "center center",
+    "mobile_poster_image": "poster_mobile.png",
+    "mobile_poster_position": "center center",
+    "mobile_poster_size": "contain",
+    "mobile_poster_background_color": "#e5f9dc",
     "page_title": "Gia đình là điều tuyệt vời nhất - Sách nói QR"
   },
   "audio": {
