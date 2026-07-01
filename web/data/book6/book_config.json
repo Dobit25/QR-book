@@ -3,10 +3,6 @@
   "book_title": "Quà Tặng Cho Con",
   "ui": {
     "poster_position": "center center",
-    "mobile_poster_image": "poster_mobile.png",
-    "mobile_poster_position": "center center",
-    "mobile_poster_size": "contain",
-    "mobile_poster_background_color": "#d2f4ff",
     "page_title": "Quà tặng cho con - Sách nói QR"
   },
   "audio": {
